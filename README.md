@@ -1,9 +1,9 @@
 # Fault Tolerence System design ECSE 422
 
 ## Authors TEAM:
--Submit in Groups of 2
--Elias Al Homsi 260797449
--Jay Abi Saad 260801368
+- Submit in Groups of 2
+- Elias Al Homsi 260797449
+- Jay Abi Saad 260801368
 
 ## Notes
 - We made changes on how the program read its input (through arguments instead through prompt)
