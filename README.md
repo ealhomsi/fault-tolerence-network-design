@@ -41,9 +41,12 @@ usage: main.py [-h] [-f FILE_PATH] -r RELIABILITY_GOAL -c COST_CONSTRAINT
 optional arguments:
   -h, --help            show this help message and exit
   -f FILE_PATH, --input-file FILE_PATH
-                        InputFile to work on
+                        InputFile to work on by default: input.txt
   -r RELIABILITY_GOAL, --reliability-goal RELIABILITY_GOAL
                         the reliability goal of the network
   -c COST_CONSTRAINT, --cost-constraint COST_CONSTRAINT
                         the cost constraint of the network
 ```
+
+#### Example
+`python main.py  -f input.txt -r 0.9 -c 80`

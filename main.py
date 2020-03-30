@@ -34,12 +34,6 @@ class Main:
         return parser.parse_args()
 
     @staticmethod
-    def attemptAcceptance(cost, costgoal, rel, relgoal):
-        if(cost <= costgoal and rel >= relgoal):
-            return True
-        return False
-    
-    @staticmethod
     def show_mst(cities, edges):
         # generate the limits of the problem
         mst = MST(cities, edges)
@@ -56,44 +50,29 @@ class Main:
         print(max_reliability_tree)
         print("max reliability tree value is {}".format(max_rel))
         print('\n')
+
+        return min_cost_tree
     
     @staticmethod
-    def main():
-        result = None
+    def optimal_solution(cities, edges, cost_constraint, reliability_goal, initial_solution):
+        def attemptAcceptance(cost, costgoal, rel, relgoal):
+            return (cost <= costgoal and rel >= relgoal)
 
-        try:
-            result = Main.parseArgs()
-        except Exception as e:
-            print(e)
-            exit()
-
-        file_path = result.file_path
-        reliability_goal = result.reliability_goal
-        cost_constraint = result.cost_constraint
-
-        cities, edges = EdgeGenerator.generate(file_path)
-
-        # print cities and edges for debugging purposes
-        print("list of cities and edges")
-        print(cities)
-        print(edges)
-        print('\n')
-
-        #show MST calculations
-        show_mst(cities, edges)
+        def sumCost(edges):
+            return sum(map(lambda x: x.c, edges))
 
         # start from min_cost tree and build up
         rel_calculator = RelCalculator(cities)
 
-        cost = min_cost
-        graph = min_cost_tree
+        graph = initial_solution
+        cost = sumCost(graph)
         rel = rel_calculator.recursive_rel(graph, [])
         while(cost <= cost_constraint and rel < reliability_goal and len(graph) < len(cities)):
             unadded_edges = [item for item in edges if item not in graph]
 
             solutions_list = []
             for unadded_edge in unadded_edges:
-                sol_cost = sum(map(lambda x: x.c, (graph + [unadded_edge])))
+                sol_cost = sumCost(graph + [unadded_edge])
                 if(sol_cost < cost_constraint):
                     solutions_list.append((
                         sol_cost,
@@ -112,16 +91,50 @@ class Main:
                 break
             else:
                 graph.append(best_candidate)
-                cost = sum(map(lambda x: x.c, graph))
+                cost = sumCost(graph)
                 rel = rel_calculator.recursive_rel(graph, [])
 
 
-        if(Main.attemptAcceptance(cost, cost_constraint, rel, reliability_goal)):
+        if(attemptAcceptance(cost, cost_constraint, rel, reliability_goal)):
             print("Solution was found with reliability of {} and cost of {}".format(rel, cost))
             print("Solution: \n")
             print(graph)
         else:
             print("The problem is unfeasable and no solution was found")
+    
+    @staticmethod
+    def printInput(cities, edges):
+        # print cities and edges for debugging purposes
+        print("list of cities and edges")
+        print(cities)
+        print(edges)
+        print('\n')
+
+    @staticmethod
+    def main():
+        result = None
+
+        try:
+            result = Main.parseArgs()
+        except Exception as e:
+            print(e)
+            exit()
+
+        file_path = result.file_path
+        reliability_goal = result.reliability_goal
+        cost_constraint = result.cost_constraint
+
+        cities, edges = EdgeGenerator.generate(file_path)
+
+        # show Input
+        Main.printInput(cities, edges)
+
+        # show MST calculations
+        initial_solution = Main.show_mst(cities, edges)
+
+        # find the optimal solution
+        Main.optimal_solution(cities, edges, cost_constraint, reliability_goal, initial_solution)
+        
 
 if __name__ == "__main__":
     Main.main()
