@@ -1,5 +1,14 @@
 # Fault Tolerence System design ECSE 422
 
+## Authors TEAM:
+-Submit in Groups of 2
+-Elias Al Homsi 260797449
+-Jay Abi Saad 260801368
+
+## Notes
+- We made changes on how the program read its input (through arguments instead through prompt)
+- We made changes and made everything class design
+
 ## Programming Assignment: Communication Network Designer
 Here is the problem you need to solve.
 You are given N number of cities. You need to design a communication network connecting these cities. The costs of connecting the cities using fiber
