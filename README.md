@@ -35,7 +35,7 @@ N(N-1)/2 numbers # reliabilities of inter-city connections
 ```
 
 ### Usage
-'''
+```
 usage: main.py [-h] [-f FILE_PATH] -r RELIABILITY_GOAL -c COST_CONSTRAINT
 
 optional arguments:
@@ -46,4 +46,4 @@ optional arguments:
                         the reliability goal of the network
   -c COST_CONSTRAINT, --cost-constraint COST_CONSTRAINT
                         the cost constraint of the network
-'''
+```
