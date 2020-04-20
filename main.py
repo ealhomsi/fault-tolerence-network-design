@@ -19,7 +19,6 @@ from mst import MST
 from edge_generator import EdgeGenerator
 from argparse import ArgumentParser
 from rel_calculator import RelCalculator
-import pdb
 
 class Main:
     @staticmethod
@@ -121,8 +120,8 @@ class Main:
             exit()
 
         file_path = result.file_path
-        reliability_goal = result.reliability_goal
-        cost_constraint = result.cost_constraint
+        reliability_goal = result.reliability_goal + 1e-10 # add epsilon for numerical stability
+        cost_constraint = result.cost_constraint + 1e-10
 
         cities, edges = EdgeGenerator.generate(file_path)
 
